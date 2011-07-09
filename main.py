@@ -103,6 +103,7 @@ def home_search():
 		x = raw_input("Search by ID:   ")
 		z = db.find_user("id",x)
 		outy(z)
+	raw_input("Press [enter] to go home")
 	home()
 def home_checkin():
 	print "====================="
