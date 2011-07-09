@@ -14,10 +14,19 @@ class User(object):
         self.checkins = checkins
 
 def get_users():
+	z = []
 	c.execute("""SELECT * FROM users""")
-	for id, name, first_name, last_name, checkins in c.fetchall():
-		u = User(id, name, first_name, last_name, checkins)
-    	print u.first_name
+	x = c.fetchall()
+	#return x
+	for id, name, first_name, last_name, checkins in x:
+		#u = User(id, name, first_name, last_name, checkins)
+		z.append((id, name, first_name, last_name, checkins))
+	return z
+	#for i in x:
+	#	for id, name, first_name, last_name, checkins in i:
+	#		u = User(id, name, first_name, last_name, checkins)
+    #		print u.first_name			
+
 
 def add_user(fname,lname,checkins):
 	name = fname+" "+lname
