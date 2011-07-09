@@ -1,9 +1,20 @@
 from time import *
 import random
 import db
+import os
 
 t = gmtime()
 date = str(t[0])+"/"+str(t[1])+"/"+str(t[2])
+def clear(numlines="100"):
+	if os.name == "posix":
+		# Unix/Linux/MacOS/BSD/etc
+		os.system('clear')
+	elif os.name in ("nt", "dos", "ce"):
+		# DOS/Windows
+		os.system('CLS')
+	else:
+		# Fallback for other operating systems.
+		print '\n' * numlines
 
 def checkinmode():
 	iny = raw_input("NAME:   ")
@@ -17,13 +28,16 @@ def checkinmode():
 	except: #@Error 001
 		print "EXCEPTION ERROR 001 [Report to admin please!]"
 		checkinmode()
+	home()
 
 def home():
+	clear()
 	print "[N]ew User" 
 	print "[L]ist Users"
 	print "[S]earch"
 	print "[C]heck-in mode"
 	print "[E]dit user"
+	print "[Q]uit"
 	xin = raw_input("Input:   ")
 	if xin in ("N","n"):
 		home_newuser()
@@ -35,6 +49,12 @@ def home():
 		home_checkin()
 	elif xin in ("E","e"):
 		home_edituser()
+	elif xin in ("Q","q"):
+		quit()
+	else:
+		raw_input("Whoops... Didnt get that. Press [enter] to try again.")
+		home()
+
 
 def home_newuser():
 	print "====================="
@@ -45,9 +65,13 @@ def home_newuser():
 	today = raw_input("MARK PRESENT FOR TODAY [Y/N]   ")
 	if today in ("Y","y"):
 		db.add_user(newfname,newlname,"1")
+		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		raw_input()
 	else:
 		db.add_user(newfname,newlname,"0")
-
+		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		raw_input()
+	home()
 def home_list():
 	print "====================="
 	print "--->LIST ALL MENU<---"
@@ -59,7 +83,8 @@ def home_list():
 		f = 14-z
 		l = " "*f
 		print i[2], l, i[4]
-
+	raw_input("Press [enter] to goto homescreen")
+	home()
 def home_search():
 	def outy(iny):
 		print "NAME           CHECK-INS"
@@ -78,7 +103,7 @@ def home_search():
 		x = raw_input("Search by ID:   ")
 		z = db.find_user("id",x)
 		outy(z)
-
+	home()
 def home_checkin():
 	print "====================="
 	print "--->CHECK IN MODE<---"
