@@ -37,6 +37,7 @@ def home():
 		home_edituser()
 
 def home_newuser():
+	print "====================="
 	print "--->NEW USER MENU<---"
 	print "====================="
 	newfname = raw_input("NEW USER FIRST NAME:   ")
@@ -48,12 +49,24 @@ def home_newuser():
 		db.add_user(newfname,newlname,"0")
 
 def home_list():
-	pass
+	print "====================="
+	print "--->NEW USER MENU<---"
+	print "====================="
+	print "NAME        CHECK-INS"
+	x = db.get_users()
+	for i in x:
+		z = len(i[2])
+		f = 14-z
+		l = " "*f
+		print i[2], l, i[4]
 
 def home_search():
 	pass
 
 def home_checkin():
+	print "====================="
+	print "--->CHECK IN MODE<---"
+	print "====================="
 	checkinmode()
 
 def home_edituser():
