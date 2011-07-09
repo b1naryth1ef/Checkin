@@ -18,13 +18,14 @@ def clear(numlines="100"):
 
 def checkinmode():
 	iny = raw_input("NAME:   ")
-	def markin(uid,current):
-		current += 1
-		db.checkin(current,uid)
+	def markin(uid):
+		db.checkin(uid)
 		checkinmode()
 	try:
 		x = db.find_user("name",iny)
-		markin(x.id,x.checkins)
+		markin(x.id)
+		print "USER CHECK IN! [GREEN]"
+		time.sleep(3)
 	except: #@Error 001
 		print "EXCEPTION ERROR 001 [Report to admin please!]"
 		checkinmode()

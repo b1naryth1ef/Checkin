@@ -1,4 +1,6 @@
 import MySQLdb
+from time import *
+
 db = MySQLdb.connect(user="root", passwd="", db="python")
 users = []
 
@@ -37,9 +39,14 @@ def update_user(change_field,change,iden_field,iden):
 	c.execute("""UPDATE Users SET %s = "%s" WHERE %s = "%s" """, (change_field,change,iden_field,iden)) 
 	db.commit()
 
-def checkin(change,iden):
+def checkin(tid):
 	"""Checkin a user"""
-	c.execute("""UPDATE Users SET checkins = "%s" WHERE id = "%s" """, (change,iden)) 
+	t = gmtime()
+	tyear = t.tm_year
+	tmonth = t.tm_mon
+	tday = t.tm_mday
+	ttime = str(t.tm_hour)+":"+str(t.tm_min)+":"+str(t.tm_sec)
+	c.executemany("""INSERT INTO checkins ( id, year, month, day, time) VALUES (%s, %s, %s, %s, %s)""", [(tid, tyear, tmonth, tday, ttime)])
 	db.commit()
 
 def find_user(field,value):
