@@ -27,13 +27,13 @@ def home():
 	xin = raw_input("Input:   ")
 	if xin in ("N","n"):
 		home_newuser()
-	if xin in ("L","l"):
+	elif xin in ("L","l"):
 		home_list()
-	if xin in ("S","s"):
+	elif xin in ("S","s"):
 		home_search()
-	if xin in ("C","c"):
+	elif xin in ("C","c"):
 		home_checkin()
-	if xin in ("E","e"):
+	elif xin in ("E","e"):
 		home_edituser()
 
 def home_newuser():
@@ -50,7 +50,7 @@ def home_newuser():
 
 def home_list():
 	print "====================="
-	print "--->NEW USER MENU<---"
+	print "--->LIST ALL MENU<---"
 	print "====================="
 	print "NAME        CHECK-INS"
 	x = db.get_users()
@@ -61,7 +61,23 @@ def home_list():
 		print i[2], l, i[4]
 
 def home_search():
-	pass
+	def outy(iny):
+		print "NAME           CHECK-INS"
+		y = 14 - len(iny.name)
+		l = " "*y 
+		print iny.name, l, iny.checkins
+	print "====================="
+	print "---> SEARCH MENU <---"
+	print "====================="
+	do = raw_input("Search by [N]ame or [I]D    ")
+	if do in ("N", "n"):
+		x = raw_input("Search by Full Name:   ")
+		z = db.find_user("name",x)
+		outy(z)
+	elif do in ("I","i"):
+		x = raw_input("Search by ID:   ")
+		z = db.find_user("id",x)
+		outy(z)
 
 def home_checkin():
 	print "====================="
