@@ -29,8 +29,8 @@ class deprecated(Exception):
 	"""Error for functions that have been deprecated."""
 	def __init__(self, value):
 		self.value = value
-    def __str__(self):
-	    return repr(self.value)
+	def __str__(self):
+		return repr(self.value)
 
 def get_users():
 	"""Simple object that returns a list full of all our users info in tuples"""
@@ -123,20 +123,20 @@ def cquery(field,value):
 def find_user(field,value):
 	"""@DEPRECATED use search()"""
 	try:
-    	raise MyError("search()")
+		raise MyError("search()")
  	except MyError as e:
-    	print 'This function or class has been deprecated in place of: ', e.value
+	 	print 'This function or class has been deprecated in place of: ', e.value
 
 def add_user(fname,lname,checkins):
 	"""@DEPRECATED use new_user()"""
 	try:
-    	raise MyError("new_user()")
+		raise MyError("new_user()")
  	except MyError as e:
-    	print 'This function or class has been deprecated in place of: ', e.value
+	 	print 'This function or class has been deprecated in place of: ', e.value
 
 def dfind_user(field1,field2,value1,value2):
 	"""@DEPRECATED use search()"""
 	try:
-    	raise MyError("search()")
+		raise MyError("search()")
  	except MyError as e:
-    	print 'This function or class has been deprecated in place of: ', e.value
+	 	print 'This function or class has been deprecated in place of: ', e.value
