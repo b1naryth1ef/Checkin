@@ -6,6 +6,15 @@ import os, sys
 
 t = gmtime()
 date = str(t[0])+"/"+str(t[1])+"/"+str(t[2])
+
+def chky(uid):
+	x = db.checky(uid)
+	print x
+	print x.date
+
+
+
+
 def clear(numlines="100"):
 	if os.name == "posix":
 		# Unix/Linux/MacOS/BSD/etc
@@ -29,6 +38,7 @@ def checkinmode():
 		db.checkin(uid)
 	try:
 		x = db.find_user("name",iny)
+		chky(x.id)
 		markin(x.id)
 		ui.ok()
 		time.sleep(1)

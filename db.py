@@ -14,6 +14,14 @@ class User(object):
         self.first_name = first_name
         self.last_name = last_name
         self.checkins = checkins
+class Checkin(object):
+    """A simple Checkin class"""
+    def __init__(self, id, year=None, month=None, day=None,time=None):
+        self.id = id
+        self.year = year
+        self.month = month
+        self.day = day
+        self.time = time
 
 def get_users():
 	z = []
@@ -59,4 +67,10 @@ def dfind_user(field1,field2,value1,value2):
 	c.execute("""SELECT * FROM Users WHERE %s = %s AND %s = %s""", (field1, value1, field2, value2))
 	for userid, first_name, last_name, checkins in c.fetchall():
 		u = User(userid, first_name, last_name, checkins)
+		return u
+
+def checky(uid):
+	c.execute("""SELECT * FROM Checkins WHERE id = "%s" """ % (uid))
+	for id, year, month, day, time in c.fetchall():
+		u = User(id, year, month, day, time)
 		return u
