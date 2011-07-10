@@ -40,14 +40,32 @@ def get_users():
     #		print u.first_name			
 
 
-def add_user(fname,lname,checkins):
+def add_user(fname,lname,checkins): #@deprecated In replace of new_user
 	name = fname+" "+lname
 	c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
 
+def new_user(fname,lname,checkinz):
+	if checkinz == True:
+		name = fname+" "+lname
+		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
+		x = find_user("name", name)
+		checkin(x.id)
+	elif checkinz == False:
+		name = fname+" "+lname
+		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])	
+	else:
+		pass
+		
 def update_user(change_field,change,iden_field,iden):
 	"""Update a row in format IDENITY|SELECT FIELD|CHANGE|CHANGE FIELD"""
 	c.execute("""UPDATE Users SET %s = "%s" WHERE %s = "%s" """, (change_field,change,iden_field,iden)) 
 	db.commit()
+
+def county(uid):
+	c.execute("""SELECT * FROM users where id = "%s" """ % (uid))
+	for id, name, first_name, last_name, checkins in c.fetchall():
+		u = User(id, name, first_name, last_name, checkins)
+		return u
 
 def checkin(tid):
 	"""Checkin a user"""
@@ -63,6 +81,9 @@ def checkin(tid):
 	ttime = str(now.hour)+":"+str(now.minute)+":"+str(now.second)
 	c.executemany("""INSERT INTO checkins ( id, year, month, day, time) VALUES (%s, %s, %s, %s, %s)""", [(tid, tyear, tmonth, tday, ttime)])
 	db.commit()
+	x = county(tid)
+	y = int(x.checkins)+1
+	c.execute("""UPDATE Users SET checkins = %s WHERE id = "%s" """ % (y,tid))
 
 def find_user(field,value):
 	c.execute("""SELECT * FROM Users WHERE %s = "%s" """ % (field,value))

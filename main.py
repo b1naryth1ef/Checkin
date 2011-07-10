@@ -69,13 +69,13 @@ def home_newuser():
 	newlname = raw_input("NEW USER LAST NAME:   ")
 	today = raw_input("MARK PRESENT FOR TODAY [Y/N]   ")
 	if today in ("Y","y"):
-		db.add_user(newfname,newlname,"1")
+		db.new_user(newfname,newlname,True)
 		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
 	elif today == ":EXIT":
 		home()
 	else:
-		db.add_user(newfname,newlname,"0")
+		db.new_user(newfname,newlname,False)
 		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
 	home()
@@ -183,7 +183,7 @@ def home():
 	print "[L]ist Users"
 	print "[S]earch"
 	print "[C]heck-in mode"
-	print "[E]dit user"
+	#print "[E]dit user"
 	print "[O]verview (stats)"
 	print "[Q]uit"
 	d = {'n': home_newuser,
