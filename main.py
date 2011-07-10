@@ -1,7 +1,8 @@
 from time import *
+import time
 import random
-import db
-import os
+import db, ui
+import os, sys
 
 t = gmtime()
 date = str(t[0])+"/"+str(t[1])+"/"+str(t[2])
@@ -17,19 +18,30 @@ def clear(numlines="100"):
 		print '\n' * numlines
 
 def checkinmode():
+	clear()
+	ui.chk()
 	iny = raw_input("NAME:   ")
+	if iny == ":EXIT":
+		home()
+	else:
+		pass
 	def markin(uid):
 		db.checkin(uid)
-		checkinmode()
 	try:
 		x = db.find_user("name",iny)
 		markin(x.id)
-		print "USER CHECK IN! [GREEN]"
-		time.sleep(3)
-	except: #@Error 001
-		print "EXCEPTION ERROR 001 [Report to admin please!]"
+		ui.ok()
+		time.sleep(1)
 		checkinmode()
-	home()
+	except AttributeError: #@Error 001
+		ui.fail()
+		time.sleep(1)
+		checkinmode()
+	except:
+		ui.err("#002")
+		time.sleep(1)
+		sys.exit()
+	
 
 def home():
 	clear()
@@ -51,7 +63,7 @@ def home():
 	elif xin in ("E","e"):
 		home_edituser()
 	elif xin in ("Q","q"):
-		quit()
+		sys.exit()
 	else:
 		raw_input("Whoops... Didnt get that. Press [enter] to try again.")
 		home()
@@ -62,17 +74,24 @@ def home_newuser():
 	print "--->NEW USER MENU<---"
 	print "====================="
 	newfname = raw_input("NEW USER FIRST NAME:   ")
+	if newfname == ":EXIT":
+		home()
+	else:
+		pass
 	newlname = raw_input("NEW USER LAST NAME:   ")
 	today = raw_input("MARK PRESENT FOR TODAY [Y/N]   ")
 	if today in ("Y","y"):
 		db.add_user(newfname,newlname,"1")
 		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
+	elif today == ":EXIT":
+		home()
 	else:
 		db.add_user(newfname,newlname,"0")
 		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
 	home()
+
 def home_list():
 	print "====================="
 	print "--->LIST ALL MENU<---"
@@ -86,6 +105,7 @@ def home_list():
 		print i[2], l, i[4]
 	raw_input("Press [enter] to goto homescreen")
 	home()
+
 def home_search():
 	def outy(iny):
 		print "NAME           CHECK-INS"
@@ -106,10 +126,8 @@ def home_search():
 		outy(z)
 	raw_input("Press [enter] to go home")
 	home()
+
 def home_checkin():
-	print "====================="
-	print "--->CHECK IN MODE<---"
-	print "====================="
 	checkinmode()
 
 def home_edituser():
