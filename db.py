@@ -27,10 +27,10 @@ class Checkin(object):
 
 class deprecated(Exception):
 	"""Error for functions that have been deprecated."""
-    def __init__(self, value):
-         self.value = value
-     def __str__(self):
-         return repr(self.value)
+	def __init__(self, value):
+		self.value = value
+    def __str__(self):
+	    return repr(self.value)
 
 def get_users():
 	"""Simple object that returns a list full of all our users info in tuples"""
