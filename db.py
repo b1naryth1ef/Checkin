@@ -53,8 +53,9 @@ def new_user(fname,lname,checkinz):
 	if checkinz == True:
 		name = fname+" "+lname
 		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
-		x = find_user("name", name)
-		checkin(x.id)
+		x = search("name", name)
+		uid = x[0][0]
+		checkin(uid)
 	elif checkinz == False:
 		name = fname+" "+lname
 		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])	
@@ -129,20 +130,20 @@ def cquery(field,value):
 def find_user(field,value):
 	"""@DEPRECATED use search()"""
 	try:
-		raise MyError("search()")
- 	except MyError as e:
+		raise deprecated("search()")
+ 	except deprecated as e:
 	 	print 'This function or class has been deprecated in place of: ', e.value
 
 def add_user(fname,lname,checkins):
 	"""@DEPRECATED use new_user()"""
 	try:
-		raise MyError("new_user()")
- 	except MyError as e:
+		raise deprecated("new_user()")
+ 	except deprecated as e:
 	 	print 'This function or class has been deprecated in place of: ', e.value
 
 def dfind_user(field1,field2,value1,value2):
 	"""@DEPRECATED use search()"""
 	try:
-		raise MyError("search()")
- 	except MyError as e:
+		raise deprecated("search()")
+ 	except deprecated as e:
 	 	print 'This function or class has been deprecated in place of: ', e.value
