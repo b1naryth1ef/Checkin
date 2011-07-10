@@ -87,10 +87,10 @@ def home_list():
 	print "NAME        CHECK-INS"
 	x = db.get_users()
 	for i in x:
-		z = len(i[2])
-		f = 14-z
+		z = len(i[1])
+		f = 16-z
 		l = " "*f
-		print i[2], l, i[4]
+		print i[1], l, i[4]
 	raw_input("Press [enter] to goto homescreen")
 	home()
 
