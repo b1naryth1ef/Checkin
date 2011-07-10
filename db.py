@@ -25,6 +25,13 @@ class Checkin(object):
         self.day = day
         self.time = time
 
+class deprecated(Exception):
+	"""Error for functions that have been deprecated."""
+    def __init__(self, value):
+         self.value = value
+     def __str__(self):
+         return repr(self.value)
+
 def get_users():
 	"""Simple object that returns a list full of all our users info in tuples"""
 	z = []
@@ -34,10 +41,6 @@ def get_users():
 		z.append((id, name, first_name, last_name, checkins))
 	return z
 
-def add_user(fname,lname,checkins): #@deprecated In replace of new_user
-	"""DEPRECATED FUNCTION! USE new_user() INSTEAD!"""
-	name = fname+" "+lname
-	c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
 
 def new_user(fname,lname,checkinz):
 	"""Adds a user in format new_user("FirstName", "LastName", True) where true is bool of whether to mark present for today"""
@@ -77,19 +80,13 @@ def checkin(tid):
 	y = int(x.checkins)+1
 	c.execute("""UPDATE Users SET checkins = %s WHERE id = "%s" """ % (y,tid))
 
-def find_user(field,value):
-	"""Bad method of finding uesrs. @bad will be replaced by search() later"""
+def search(field,value):
+	"""Finds a user."""
+	f = []
 	c.execute("""SELECT * FROM Users WHERE %s = "%s" """ % (field,value))
 	for id, name, first_name, last_name, checkins in c.fetchall():
-		u = User(id, name, first_name, last_name, checkins)
-		return u
-
-def dfind_user(field1,field2,value1,value2):
-	"""@deprecated replaced by find_user() & search()"""
-	c.execute("""SELECT * FROM Users WHERE %s = %s AND %s = %s""", (field1, value1, field2, value2))
-	for userid, first_name, last_name, checkins in c.fetchall():
-		u = User(userid, first_name, last_name, checkins)
-		return u
+		f.append((id,name,first_name,last_name,checkins))
+	return f
 
 def checkins_today(uid):
 	"""Checks if any checkins exsist for the user today."""
@@ -119,3 +116,27 @@ def cquery(field,value):
 		xy[0] += 1
 		xz.append((id,time))
 	return (xy,xz)
+
+########################
+##DEPRECATED FUNCTIONS##
+########################
+def find_user(field,value):
+	"""@DEPRECATED use search()"""
+	try:
+    	raise MyError("search()")
+ 	except MyError as e:
+    	print 'This function or class has been deprecated in place of: ', e.value
+
+def add_user(fname,lname,checkins):
+	"""@DEPRECATED use new_user()"""
+	try:
+    	raise MyError("new_user()")
+ 	except MyError as e:
+    	print 'This function or class has been deprecated in place of: ', e.value
+
+def dfind_user(field1,field2,value1,value2):
+	"""@DEPRECATED use search()"""
+	try:
+    	raise MyError("search()")
+ 	except MyError as e:
+    	print 'This function or class has been deprecated in place of: ', e.value

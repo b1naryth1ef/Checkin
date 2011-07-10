@@ -33,7 +33,7 @@ def checkinmode():
 	def markin(uid):
 		db.checkin(uid)
 	try:
-		x = db.find_user("name",iny)
+		x = db.search("name",iny)
 		if chky(x.id) is False:
 			markin(x.id)
 			ui.ok()
@@ -113,7 +113,7 @@ def home_search():
 	do = raw_input("Search by [N]ame or [I]D    ")
 	if do in ("N", "n"):
 		x = raw_input("Search by Full Name:   ")
-		z = db.find_user("name",x)
+		z = db.search("name",x)
 		try:
 			outy(z)
 		except AttributeError: #@Error 004
@@ -122,7 +122,7 @@ def home_search():
 			home_search()
 	elif do in ("I","i"):
 		x = raw_input("Search by ID:   ")
-		z = db.find_user("id",x)
+		z = db.search("id",x)
 		outy(z)
 	raw_input("Press [enter] to go home")
 	home()
