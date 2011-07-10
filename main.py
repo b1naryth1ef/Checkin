@@ -4,9 +4,6 @@ import random
 import db, ui
 import os, sys
 
-t = gmtime()
-date = str(t[0])+"/"+str(t[1])+"/"+str(t[2])
-
 def chky(uid):
 	x = db.checky(uid)
 	if x == None:
@@ -55,7 +52,7 @@ def checkinmode():
 		time.sleep(1)
 		checkinmode()
 	except: #@error 002
-		print sys.exc_info()[0]
+		#print sys.exc_info()[0]
 		ui.err("#002")
 		time.sleep(1)
 		sys.exit()

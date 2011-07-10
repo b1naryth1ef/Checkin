@@ -1,5 +1,7 @@
 import MySQLdb
-from time import *
+import os
+import datetime
+
 
 db = MySQLdb.connect(user="root", passwd="", db="python")
 users = []
@@ -49,11 +51,16 @@ def update_user(change_field,change,iden_field,iden):
 
 def checkin(tid):
 	"""Checkin a user"""
-	t = gmtime()
-	tyear = t.tm_year
-	tmonth = t.tm_mon
-	tday = t.tm_mday
-	ttime = str(t.tm_hour)+":"+str(t.tm_min)+":"+str(t.tm_sec)
+	#t = gmtime()
+	#tyear = t.tm_year
+	#tmonth = t.tm_mon
+	#tday = t.tm_mday
+	#ttime = str(t.tm_hour)+":"+str(t.tm_min)+":"+str(t.tm_sec)
+	now = datetime.datetime.now()
+	tyear = now.year
+	tmonth = now.month
+	tday = now.day
+	ttime = str(now.hour)+":"+str(now.minute)+":"+str(now.second)
 	c.executemany("""INSERT INTO checkins ( id, year, month, day, time) VALUES (%s, %s, %s, %s, %s)""", [(tid, tyear, tmonth, tday, ttime)])
 	db.commit()
 
@@ -71,9 +78,9 @@ def dfind_user(field1,field2,value1,value2):
 
 def checky(uid):
 	xy = []
-	t = gmtime()
-	tmonth = t.tm_mon
-	tday = t.tm_mday
+	now = datetime.datetime.now()
+	tmonth = now.month
+	tday = now.day
 	c.execute("""SELECT * FROM Checkins WHERE month = %s AND day=%s AND id=%s""" % (tmonth, tday, uid))
 	for id, year, month, day, time in c.fetchall():
 		xy.append((month,day,time))
