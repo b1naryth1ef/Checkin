@@ -1,11 +1,10 @@
+#Imports
 import MySQLdb
 import os
 import datetime
 
-
+#Initiate curser
 db = MySQLdb.connect(user="root", passwd="", db="python")
-users = []
-
 c = db.cursor()
 
 class User(object):
@@ -16,6 +15,7 @@ class User(object):
         self.first_name = first_name
         self.last_name = last_name
         self.checkins = checkins
+
 class Checkin(object):
     """A simple Checkin class"""
     def __init__(self, id, year=None, month=None, day=None,time=None):
@@ -26,25 +26,21 @@ class Checkin(object):
         self.time = time
 
 def get_users():
+	"""Simple object that returns a list full of all our users info in tuples"""
 	z = []
 	c.execute("""SELECT * FROM users""")
 	x = c.fetchall()
-	#return x
 	for id, name, first_name, last_name, checkins in x:
-		#u = User(id, name, first_name, last_name, checkins)
 		z.append((id, name, first_name, last_name, checkins))
 	return z
-	#for i in x:
-	#	for id, name, first_name, last_name, checkins in i:
-	#		u = User(id, name, first_name, last_name, checkins)
-    #		print u.first_name			
-
 
 def add_user(fname,lname,checkins): #@deprecated In replace of new_user
+	"""DEPRECATED FUNCTION! USE new_user() INSTEAD!"""
 	name = fname+" "+lname
 	c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
 
 def new_user(fname,lname,checkinz):
+	"""Adds a user in format new_user("FirstName", "LastName", True) where true is bool of whether to mark present for today"""
 	if checkinz == True:
 		name = fname+" "+lname
 		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
@@ -57,23 +53,19 @@ def new_user(fname,lname,checkinz):
 		pass
 		
 def update_user(change_field,change,iden_field,iden):
-	"""Update a row in format IDENITY|SELECT FIELD|CHANGE|CHANGE FIELD"""
+	"""Update a row in format IDENITY|SELECT FIELD|CHANGE|CHANGE FIELD @bad Replacement of this function is in the works"""
 	c.execute("""UPDATE Users SET %s = "%s" WHERE %s = "%s" """, (change_field,change,iden_field,iden)) 
 	db.commit()
 
 def county(uid):
+	"""Err what?"""
 	c.execute("""SELECT * FROM users where id = "%s" """ % (uid))
 	for id, name, first_name, last_name, checkins in c.fetchall():
 		u = User(id, name, first_name, last_name, checkins)
 		return u
 
 def checkin(tid):
-	"""Checkin a user"""
-	#t = gmtime()
-	#tyear = t.tm_year
-	#tmonth = t.tm_mon
-	#tday = t.tm_mday
-	#ttime = str(t.tm_hour)+":"+str(t.tm_min)+":"+str(t.tm_sec)
+	"""Checks a user in. @planned add more options for selecting user to checkin."""
 	now = datetime.datetime.now()
 	tyear = now.year
 	tmonth = now.month
@@ -86,18 +78,21 @@ def checkin(tid):
 	c.execute("""UPDATE Users SET checkins = %s WHERE id = "%s" """ % (y,tid))
 
 def find_user(field,value):
+	"""Bad method of finding uesrs. @bad will be replaced by search() later"""
 	c.execute("""SELECT * FROM Users WHERE %s = "%s" """ % (field,value))
 	for id, name, first_name, last_name, checkins in c.fetchall():
 		u = User(id, name, first_name, last_name, checkins)
 		return u
 
 def dfind_user(field1,field2,value1,value2):
+	"""@deprecated replaced by find_user() & search()"""
 	c.execute("""SELECT * FROM Users WHERE %s = %s AND %s = %s""", (field1, value1, field2, value2))
 	for userid, first_name, last_name, checkins in c.fetchall():
 		u = User(userid, first_name, last_name, checkins)
 		return u
 
-def checky(uid):
+def checkins_today(uid):
+	"""Checks if any checkins exsist for the user today."""
 	xy = []
 	now = datetime.datetime.now()
 	tmonth = now.month
@@ -108,6 +103,7 @@ def checky(uid):
 		return xy
 		
 def checkins(uid):
+	"""Get all checkins for a user @planned add more options for selecting users"""
 	xy = []
 	c.execute("""SELECT * FROM Checkins WHERE id = "%s" """ % (uid))
 	for id, year, month, day, time in c.fetchall():
@@ -115,6 +111,7 @@ def checkins(uid):
 		return xy
 
 def cquery(field,value):
+	"""Gets checkins for a user depending on options you give it. Returns tuple of number of checkins and another tuple of ("id", "time") """
 	xy = [1]
 	xz = []
 	c.execute("""SELECT * FROM Checkins WHERE %s = "%s" """ % (field,value))

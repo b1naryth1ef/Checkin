@@ -5,7 +5,7 @@ import db, ui
 import os, sys
 
 def chky(uid):
-	x = db.checky(uid)
+	x = db.checkins_today(uid)
 	if x == None:
 		return False
 	else:
