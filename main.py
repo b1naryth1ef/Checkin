@@ -5,6 +5,7 @@ import db, ui
 import os, sys
 
 def chky(uid):
+	"""Checks if a user has any previous checkins for the day."""
 	x = db.checkins_today(uid)
 	if x == None:
 		return False
@@ -12,6 +13,7 @@ def chky(uid):
 		return True
 
 def clear(numlines="100"):
+	"""Clears the screen..."""
 	if os.name == "posix":
 		# Unix/Linux/MacOS/BSD/etc
 		os.system('clear')
@@ -23,6 +25,7 @@ def clear(numlines="100"):
 		print '\n' * numlines
 
 def checkinmode():
+	"""The checkin screen"""
 	clear()
 	ui.chk()
 	iny = raw_input("NAME:   ")
@@ -58,6 +61,7 @@ def checkinmode():
 		sys.exit()
 
 def home_newuser():
+	"""The new user menu"""
 	print "====================="
 	print "--->NEW USER MENU<---"
 	print "====================="
@@ -81,6 +85,7 @@ def home_newuser():
 	home()
 
 def home_list():
+	"""The list all menu"""
 	print "====================="
 	print "--->LIST ALL MENU<---"
 	print "====================="
@@ -95,6 +100,7 @@ def home_list():
 	home()
 
 def home_search():
+	"""The search menu"""
 	def outy(iny):
 		x = db.checkins(iny.id)
 		print "NAME           CHECK-INS"
@@ -128,13 +134,17 @@ def home_search():
 	home()
 
 def home_checkin():
+	"""Stupid pointer to the check in mode. (@change for [b1naryth1ef])"""
 	checkinmode()
 
 def home_edituser():
+	"""@planned allows admins to edit users"""
 	pass
 
 def home_stats():
+	"""Pulls up stats."""
 	def month(m):
+		"""Shows both total number of checkins for a month, and individual checkins."""
 		x = db.cquery("month",m)
 		print "Total:", x[0]
 		f = raw_input("[L]ist [N]ew overview or[B]ack to home   ").lower()
@@ -152,6 +162,7 @@ def home_stats():
 			pass
 
 	def day(d):
+		""" Shows both total number of checkins for a day and the individual checkins"""
 		x = db.cquery("day",d)
 		print "Total:", x[0]
 		f = raw_input("[L]ist [N]ew overview or [B]ack to home   ").lower()
@@ -178,6 +189,7 @@ def home_stats():
 	
 
 def home():
+	"""Home menu @credit [HarryD]"""
 	clear()
 	print "[N]ew User" 
 	print "[L]ist Users"
