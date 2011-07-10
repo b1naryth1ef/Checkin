@@ -2,9 +2,15 @@
 import MySQLdb
 import os
 import datetime
+import config
+
+user = config.user
+passwd = config.password
+db = config.db
+server = config.server
 
 #Initiate curser
-db = MySQLdb.connect(user="root", passwd="", db="python")
+db = MySQLdb.connect(user=user, passwd=passwd, server=server, db=db)
 c = db.cursor()
 
 class User(object):

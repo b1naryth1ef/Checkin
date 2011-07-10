@@ -1,3 +1,4 @@
 server = ""
+user = ""
 db = ""
 password = ""
