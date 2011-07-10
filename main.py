@@ -96,10 +96,17 @@ def home_list():
 
 def home_search():
 	def outy(iny):
+		x = db.checkins(iny.id)
 		print "NAME           CHECK-INS"
 		y = 14 - len(iny.name)
 		l = " "*y 
+		
 		print iny.name, l, iny.checkins
+		print "YEAR | MONTH | DAY | TIME"
+		for i in x:
+			y2 = 6 - len(str(i[1]))
+			f = " "*y2
+			print str(i[0]),"|",str(i[1])+f+"|",str(i[2]),"|",str(i[3])
 	print "====================="
 	print "---> SEARCH MENU <---"
 	print "====================="
@@ -107,7 +114,12 @@ def home_search():
 	if do in ("N", "n"):
 		x = raw_input("Search by Full Name:   ")
 		z = db.find_user("name",x)
-		outy(z)
+		try:
+			outy(z)
+		except AttributeError: #@Error 004
+			ui.err("#004")
+			time.sleep(1)
+			home_search()
 	elif do in ("I","i"):
 		x = raw_input("Search by ID:   ")
 		z = db.find_user("id",x)
@@ -121,6 +133,9 @@ def home_checkin():
 def home_edituser():
 	pass
 
+def home_stats():
+	pass
+
 def home():
 	clear()
 	print "[N]ew User" 
@@ -128,12 +143,14 @@ def home():
 	print "[S]earch"
 	print "[C]heck-in mode"
 	print "[E]dit user"
+	print "[O]verview (stats)"
 	print "[Q]uit"
 	d = {'n': home_newuser,
 		'l': home_list,
 		's': home_search,
 		'c': home_checkin,
 		'e': home_edituser,
+		'o': home_stats,
 		'q': sys.exit}
 	xin = raw_input("Input:   ").lower()
 	if xin in d:

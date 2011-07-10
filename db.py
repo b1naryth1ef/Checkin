@@ -86,3 +86,9 @@ def checky(uid):
 		xy.append((month,day,time))
 		return xy
 		
+def checkins(uid):
+	xy = []
+	c.execute("""SELECT * FROM Checkins WHERE id = "%s" """ % (uid))
+	for id, year, month, day, time in c.fetchall():
+		xy.append((year,month,day,time))
+		return xy
