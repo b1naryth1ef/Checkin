@@ -92,3 +92,12 @@ def checkins(uid):
 	for id, year, month, day, time in c.fetchall():
 		xy.append((year,month,day,time))
 		return xy
+
+def cquery(field,value):
+	xy = [1]
+	xz = []
+	c.execute("""SELECT * FROM Checkins WHERE %s = "%s" """ % (field,value))
+	for id, year, month, day, time in c.fetchall():
+		xy[0] += 1
+		xz.append((id,time))
+	return (xy,xz)

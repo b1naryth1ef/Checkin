@@ -134,7 +134,48 @@ def home_edituser():
 	pass
 
 def home_stats():
-	pass
+	def month(m):
+		x = db.cquery("month",m)
+		print "Total:", x[0]
+		f = raw_input("[L]ist [N]ew overview or[B]ack to home   ").lower()
+		if f == "l":
+			for i in x[1]:
+				print "ID:", i[0],
+				print "TIME:", i[1]
+			raw_input("[Enter] to go back to search")
+			home_stats()
+		elif f == "n":
+			home_stats()
+		elif f == "b":
+			home()
+		else:
+			pass
+
+	def day(d):
+		x = db.cquery("day",d)
+		print "Total:", x[0]
+		f = raw_input("[L]ist [N]ew overview or [B]ack to home   ").lower()
+		if f == "l":
+			for i in x[1]:
+				print "ID:", i[0],
+				print "TIME:", i[1]
+			raw_input("[Enter] to go back to search")
+			home_stats()
+		elif f == "n":
+			home_stats()
+		elif f == "b":
+			home()
+		else:
+			pass
+
+	x = raw_input("[M]onth or [D]ay stats:   ").lower()
+	if x == "m":
+		m = raw_input("Month (as integer):   ")
+		month(m)
+	elif x == "d":
+		d = raw_input("Day (as integer):   ")
+		day(d)
+	
 
 def home():
 	clear()
