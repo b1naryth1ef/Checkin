@@ -70,7 +70,12 @@ def dfind_user(field1,field2,value1,value2):
 		return u
 
 def checky(uid):
-	c.execute("""SELECT * FROM Checkins WHERE id = "%s" """ % (uid))
+	xy = []
+	t = gmtime()
+	tmonth = t.tm_mon
+	tday = t.tm_mday
+	c.execute("""SELECT * FROM Checkins WHERE month = %s AND day=%s AND id=%s""" % (tmonth, tday, uid))
 	for id, year, month, day, time in c.fetchall():
-		u = User(id, year, month, day, time)
-		return u
+		xy.append((month,day,time))
+		return xy
+		

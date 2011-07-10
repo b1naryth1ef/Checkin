@@ -21,3 +21,6 @@ def chk():
 	print colored("=====================",green)
 	print colored("--->CHECK IN MODE<---", blue)
 	print colored("=====================",green)
+
+def chkold():
+		print colored("-------------USER ALREADY CHECKED IN!-------------", red)

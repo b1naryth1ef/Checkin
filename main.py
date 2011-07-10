@@ -9,11 +9,10 @@ date = str(t[0])+"/"+str(t[1])+"/"+str(t[2])
 
 def chky(uid):
 	x = db.checky(uid)
-	print x
-	print x.date
-
-
-
+	if x == None:
+		return False
+	else:
+		return True
 
 def clear(numlines="100"):
 	if os.name == "posix":
@@ -38,16 +37,25 @@ def checkinmode():
 		db.checkin(uid)
 	try:
 		x = db.find_user("name",iny)
-		chky(x.id)
-		markin(x.id)
-		ui.ok()
-		time.sleep(1)
-		checkinmode()
+		if chky(x.id) is False:
+			markin(x.id)
+			ui.ok()
+			time.sleep(1)
+			checkinmode()
+		elif chky(x.id) is True:
+			ui.chkold()
+			time.sleep(1)
+			checkinmode()
+		else:	#@error 003
+			ui.err("#003")
+			time.sleep(1)
+			checkinmode()
 	except AttributeError: #@Error 001
 		ui.fail()
 		time.sleep(1)
 		checkinmode()
-	except:
+	except: #@error 002
+		print sys.exc_info()[0]
 		ui.err("#002")
 		time.sleep(1)
 		sys.exit()
