@@ -216,4 +216,4 @@ def home():
 		raw_input("Whoops... Didnt get that. Press [enter] to try again.")
 		home()
 
-home()
+#home()
