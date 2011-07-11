@@ -37,12 +37,12 @@ def checkinmode():
 		db.checkin(uid)
 	try:
 		x = db.search("name",iny)
-		if chky(x.id) is False:
-			markin(x.id)
+		if chky(x[0][0]) is False:
+			markin(x[0][0])
 			ui.ok()
 			time.sleep(1)
 			checkinmode()
-		elif chky(x.id) is True:
+		elif chky(x[0][0]) is True:
 			ui.chkold()
 			time.sleep(1)
 			checkinmode()
@@ -54,11 +54,6 @@ def checkinmode():
 		ui.fail()
 		time.sleep(1)
 		checkinmode()
-	except: #@error 002
-		#print sys.exc_info()[0]
-		ui.err("#002")
-		time.sleep(1)
-		sys.exit()
 
 def home_newuser():
 	"""The new user menu"""
