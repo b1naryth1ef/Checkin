@@ -3,6 +3,7 @@ import MySQLdb
 import os
 import datetime
 import config
+import ui
 
 user = config.user
 passwd = config.password
@@ -47,21 +48,31 @@ def get_users():
 		z.append((id, name, first_name, last_name, checkins))
 	return z
 
+def user_exist(name):
+	c.execute("""SELECT * FROM users WHERE name="%s" """ % (name))
+	if c.fetchall() == ():
+		return False
+	else:
+		return True
+
 
 def new_user(fname,lname,checkinz):
 	"""Adds a user in format new_user("FirstName", "LastName", True) where true is bool of whether to mark present for today"""
-	if checkinz == True:
-		name = fname+" "+lname
-		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])
-		x = search("name", name)
-		uid = x[0][0]
-		checkin(uid)
-	elif checkinz == False:
-		name = fname+" "+lname
-		c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, checkins)])	
+	name = fname+" "+lname
+	if user_exist(name) is False:
+		if checkinz == True:
+			c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, "1")])
+			x = osearch("name", name)
+			uid = x.id
+			checkin(uid)
+		elif checkinz == False:
+			c.executemany("""INSERT INTO users ( name, first_name, last_name, checkins) VALUES (%s, %s, %s, %s)""", [(name, fname, lname, "0")])	
+		else:
+			pass
+		return True
 	else:
-		pass
-		
+		ui.usr_err_1()
+		return False
 def update_user(change_field,change,iden_field,iden):
 	"""Update a row in format IDENITY|SELECT FIELD|CHANGE|CHANGE FIELD @bad Replacement of this function is in the works"""
 	c.execute("""UPDATE Users SET %s = "%s" WHERE %s = "%s" """, (change_field,change,iden_field,iden)) 
@@ -101,9 +112,9 @@ def osearch(field,value):
 	for id, name, first_name, last_name, checkins in c.fetchall():
 		f = User(id, name, first_name, last_name, checkins)
 		return f
-		
+
 def checkins_today(uid):
-	"""Checks if any checkins exsist for the user today."""
+	"""Checks if any checkins exist for the user today."""
 	xy = []
 	now = datetime.datetime.now()
 	tmonth = now.month

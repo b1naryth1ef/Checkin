@@ -57,9 +57,7 @@ def checkinmode():
 
 def home_newuser():
 	"""The new user menu"""
-	print "====================="
-	print "--->NEW USER MENU<---"
-	print "====================="
+	ui.newy1()
 	newfname = raw_input("NEW USER FIRST NAME:   ")
 	if newfname == ":EXIT":
 		home()
@@ -68,23 +66,27 @@ def home_newuser():
 	newlname = raw_input("NEW USER LAST NAME:   ")
 	today = raw_input("MARK PRESENT FOR TODAY [Y/N]   ")
 	if today in ("Y","y"):
-		db.new_user(newfname,newlname,True)
-		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		z = db.new_user(newfname,newlname,True)
+		if z is True:
+			print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		elif z is False:
+			print "USER WAS NOT ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
 	elif today == ":EXIT":
 		home()
 	else:
-		db.new_user(newfname,newlname,False)
-		print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		z = db.new_user(newfname,newlname,False)
+		if z is True:
+			print "USER ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
+		elif z is False:
+			print "USER WAS NOT ADDED... PRESS [ENTER] TO GOTO HOMESCREEN"
 		raw_input()
 	home()
 
 def home_list():
 	"""The list all menu"""
-	print "====================="
-	print "--->LIST ALL MENU<---"
-	print "====================="
-	print "NAME        CHECK-INS"
+	ui.lst1()
+	ui.lst2()
 	x = db.get_users()
 	for i in x:
 		z = len(i[1])
@@ -97,20 +99,17 @@ def home_list():
 def home_search():
 	"""The search menu"""
 	def outy(iny):
-		print iny.id
 		x = db.checkins(iny.id)
-		print "NAME           CHECK-INS"
+		ui.srch1()
 		y = 14 - len(iny.name)
 		l = " "*y 
 		print iny.name, l, iny.checkins
-		print "YEAR | MONTH | DAY | TIME"
+		ui.srch2()
 		for i in x:
 			y2 = 6 - len(str(i[1]))
 			f = " "*y2
 			print str(i[0]),"|",str(i[1])+f+"|",str(i[2]),"|",str(i[3])
-	print "====================="
-	print "---> SEARCH MENU <---"
-	print "====================="
+	ui.srch()
 	do = raw_input("Search by [N]ame or [I]D    ")
 	if do in ("N", "n"):
 		x = raw_input("Search by Full Name:   ")
@@ -146,9 +145,10 @@ def home_stats():
 		print "Total:", x[0]
 		f = raw_input("[L]ist [N]ew overview or[B]ack to home   ").lower()
 		if f == "l":
+			ui.mont1(m)
 			for i in x[1]:
-				print "ID:", i[0],
-				print "TIME:", i[1]
+				print ui.statsid(), i[0],"  ",ui.statstime(), i[1]
+
 			raw_input("[Enter] to go back to search")
 			home_stats()
 		elif f == "n":
@@ -156,7 +156,8 @@ def home_stats():
 		elif f == "b":
 			home()
 		else:
-			pass
+			raw_input("I didnt get that... Press [Enter] to go back to stats...")
+			home_stats()
 
 	def day(d):
 		""" Shows both total number of checkins for a day and the individual checkins"""
@@ -183,6 +184,10 @@ def home_stats():
 	elif x == "d":
 		d = raw_input("Day (as integer):   ")
 		day(d)
+	elif x == ":EXIT":
+		home()
+	else:
+		raw_input("Didnt get that... press [enter] to try again.")
 def admin():
 	pass	
 
