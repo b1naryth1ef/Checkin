@@ -24,9 +24,9 @@ In the future dependencies will be built in. Currently though you'll need to set
 
 *[Python 2.6+](http://www.python.org/download/) (Tested mostly on 2.6)    
 *[MySQL](http://dev.mysql.com/downloads/) (Any recent version should do)   
-*[MySQLdb](http://sourceforge.net/projects/mysql-python/) (Tested on 5.1.53)
-*[Colorama](http://pypi.python.org/pypi/colorama) (Tested on 0.2.4)
-*[Termcolor](http://pypi.python.org/pypi/termcolor) (Tested on 1.1.0)
+*[MySQLdb](http://sourceforge.net/projects/mysql-python/) (Tested on 5.1.53)    
+*[Colorama](http://pypi.python.org/pypi/colorama) (Tested on 0.2.4)    
+*[Termcolor](http://pypi.python.org/pypi/termcolor) (Tested on 1.1.0)    
 
 Checkin also has some precompiled versions of the above requirements. They may or may not work depending on your operating system, but go ahead and give them a try: [Reqs Branch](https://github.com/b1naryth1ef/Checkin/zipball/reqs)
  
@@ -34,3 +34,6 @@ To install and setup the database and config automatically, just run ```python i
 
 ###Thanks / Credits
 Thanks to the people who made those awesome scripts listed above. Without them this would have been a lot harder of a project. If you like the script, [follow me](http://twitter.com/b1naryth1ef) on twitter and tell me!
+
+###N.B.
+The script is still a little finicky. However, thanks too @johnreem you can run help() on the db and other things to learn how to help develop this stuff. Officially, we don't have any major TODOs, other then a better stats system. If you have any ideas, go ahead and fork the code! Pull request are almost always added.
