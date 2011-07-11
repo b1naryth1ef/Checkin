@@ -148,7 +148,6 @@ def home_stats():
 			ui.mont1(m)
 			for i in x[1]:
 				print ui.statsid(), i[0],"  ",ui.statstime(), i[1]
-
 			raw_input("[Enter] to go back to search")
 			home_stats()
 		elif f == "n":
@@ -184,10 +183,11 @@ def home_stats():
 	elif x == "d":
 		d = raw_input("Day (as integer):   ")
 		day(d)
-	elif x == ":EXIT":
+	elif x == ":exit":
 		home()
 	else:
 		raw_input("Didnt get that... press [enter] to try again.")
+		home_stats()
 def admin():
 	pass	
 
