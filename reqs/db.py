@@ -165,3 +165,4 @@ def dfind_user(field1,field2,value1,value2):
 		raise deprecated("search()")
  	except deprecated as e:
 	 	print 'This function or class has been deprecated in place of: ', e.value
+

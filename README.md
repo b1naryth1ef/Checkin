@@ -24,6 +24,6 @@ In the future dependencies will be built in. Currently though you'll need to set
 
 *[Python 2.6+](http://www.python.org/download/) (Tested mostly on 2.6) 
 *[MySQL](http://dev.mysql.com/downloads/) (Any recent version should do)
-*[MySQLdb](http://sourceforge.net/projects/mysql-python/) (Any recent version...)
+*[MySQLdb](http://sourceforge.net/projects/mysql-python/) (Tested on 5.1.53)
 
-More installation docs too come.
+To install and setup the database and config automatically, just run ```python install.py``` and follow the prompts
