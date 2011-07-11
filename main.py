@@ -36,13 +36,13 @@ def checkinmode():
 	def markin(uid):
 		db.checkin(uid)
 	try:
-		x = db.search("name",iny)
-		if chky(x[0][0]) is False:
-			markin(x[0][0])
+		x = db.osearch("name",iny)
+		if chky(x.id) is False:
+			markin(x.id)
 			ui.ok()
 			time.sleep(1)
 			checkinmode()
-		elif chky(x[0][0]) is True:
+		elif chky(x.id) is True:
 			ui.chkold()
 			time.sleep(1)
 			checkinmode()
@@ -97,11 +97,11 @@ def home_list():
 def home_search():
 	"""The search menu"""
 	def outy(iny):
+		print iny.id
 		x = db.checkins(iny.id)
 		print "NAME           CHECK-INS"
 		y = 14 - len(iny.name)
 		l = " "*y 
-		
 		print iny.name, l, iny.checkins
 		print "YEAR | MONTH | DAY | TIME"
 		for i in x:
@@ -114,7 +114,7 @@ def home_search():
 	do = raw_input("Search by [N]ame or [I]D    ")
 	if do in ("N", "n"):
 		x = raw_input("Search by Full Name:   ")
-		z = db.search("name",x)
+		z = db.osearch("name",x)
 		try:
 			outy(z)
 		except AttributeError: #@Error 004
@@ -123,8 +123,10 @@ def home_search():
 			home_search()
 	elif do in ("I","i"):
 		x = raw_input("Search by ID:   ")
-		z = db.search("id",x)
+		z = db.osearch("id",x)
 		outy(z)
+	elif do == ":EXIT":
+		home()
 	raw_input("Press [enter] to go home")
 	home()
 
@@ -181,7 +183,8 @@ def home_stats():
 	elif x == "d":
 		d = raw_input("Day (as integer):   ")
 		day(d)
-	
+def admin():
+	pass	
 
 def home():
 	"""Home menu @credit [HarryD]"""
@@ -199,7 +202,8 @@ def home():
 		'c': home_checkin,
 		'e': home_edituser,
 		'o': home_stats,
-		'q': sys.exit}
+		'q': sys.exit,
+		'a': admin}
 	xin = raw_input("Input:   ").lower()
 	if xin in d:
 		d[xin]()

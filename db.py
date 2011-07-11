@@ -88,13 +88,20 @@ def checkin(tid):
 	c.execute("""UPDATE Users SET checkins = %s WHERE id = "%s" """ % (y,tid))
 
 def search(field,value):
-	"""Finds a user."""
+	"""Finds a user and return a tuple'd list."""
 	f = []
 	c.execute("""SELECT * FROM Users WHERE %s = "%s" """ % (field,value))
 	for id, name, first_name, last_name, checkins in c.fetchall():
 		f.append((id,name,first_name,last_name,checkins))
 	return f
 
+def osearch(field,value):
+	"""Find a user and return a User object"""
+	c.execute("""SELECT * FROM Users WHERE %s = "%s" """ % (field,value))
+	for id, name, first_name, last_name, checkins in c.fetchall():
+		f = User(id, name, first_name, last_name, checkins)
+		return f
+		
 def checkins_today(uid):
 	"""Checks if any checkins exsist for the user today."""
 	xy = []
@@ -112,7 +119,7 @@ def checkins(uid):
 	c.execute("""SELECT * FROM Checkins WHERE id = "%s" """ % (uid))
 	for id, year, month, day, time in c.fetchall():
 		xy.append((year,month,day,time))
-		return xy
+	return xy
 
 def cquery(field,value):
 	"""Gets checkins for a user depending on options you give it. Returns tuple of number of checkins and another tuple of ("id", "time") """
