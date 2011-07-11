@@ -22,8 +22,15 @@ Checkin is extremely secure, being able to run completely off network, or on you
 ###Setting up
 In the future dependencies will be built in. Currently though you'll need to set them up.
 
-*[Python 2.6+](http://www.python.org/download/) (Tested mostly on 2.6) 
-*[MySQL](http://dev.mysql.com/downloads/) (Any recent version should do)
+*[Python 2.6+](http://www.python.org/download/) (Tested mostly on 2.6)    
+*[MySQL](http://dev.mysql.com/downloads/) (Any recent version should do)   
 *[MySQLdb](http://sourceforge.net/projects/mysql-python/) (Tested on 5.1.53)
+*[Colorama](http://pypi.python.org/pypi/colorama) (Tested on 0.2.4)
+*[Termcolor](http://pypi.python.org/pypi/termcolor) (Tested on 1.1.0)
 
+Checkin also has some precompiled versions of the above requirements. They may or may not work depending on your operating system, but go ahead and give them a try: [Reqs Branch](https://github.com/b1naryth1ef/Checkin/zipball/reqs)
+ 
 To install and setup the database and config automatically, just run ```python install.py``` and follow the prompts
+
+###Thanks / Credits
+Thanks to the people who made those awesome scripts listed above. Without them this would have been a lot harder of a project. If you like the script, [follow me](http://twitter.com/b1naryth1ef) on twitter and tell me!
