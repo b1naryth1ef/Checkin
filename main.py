@@ -142,7 +142,7 @@ def home_stats():
 	def month(m):
 		"""Shows both total number of checkins for a month, and individual checkins."""
 		x = db.cquery("month",m)
-		print "Total:", x[0]
+		print "Total:", x[0] #@BUG when zero sometimes displays "1"
 		f = raw_input("[L]ist [N]ew overview or[B]ack to home   ").lower()
 		if f == "l":
 			ui.mont1(m)
