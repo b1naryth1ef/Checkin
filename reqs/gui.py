@@ -16,6 +16,12 @@ root = Tk()
 # for testing
 s = "Check in:"
 
+w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+root.overrideredirect(1)
+root.geometry("%dx%d+0+0" % (w, h))
+
+root.focus_set() # <-- move focus to this widget
+root.bind("<Escape>", lambda e: e.widget.quit())
  
 # create needed widgets
 label = Label(root, text=s)
@@ -24,10 +30,10 @@ button = Button(root, text="Update", command=update)
 text = Text(root, width=25, height=1)
  
 # place the widgets in a grid
-label.grid(row=1, column=1)
-entry.grid(row=1, column=2)
-button.grid(row=1, column=3)
-text.grid(row=2, column=1)
+label.grid(row=10, column=11)
+entry.grid(row=10, column=12)
+button.grid(row=10, column=13)
+text.grid(row=11, column=11)
  
 # put the cursor into entry field
 entry.focus()
