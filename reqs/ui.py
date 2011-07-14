@@ -2,6 +2,8 @@
 from colorama import init
 from termcolor import colored
 
+init() #This is our windows support
+
 green = "green"
 red = "red"
 yellow = "yellow"
