@@ -7,32 +7,22 @@ import os, sys
 def chky(uid):
 	"""Checks if a user has any previous checkins for the day."""
 	x = db.checkins_today(uid)
-	if x == None:
-		return False
-	else:
-		return True
+	if x == None: return False
+	else: return True
 
 def clear(numlines="100"):
 	"""Clears the screen..."""
-	if os.name == "posix":
-		# Unix/Linux/MacOS/BSD/etc
-		os.system('clear')
-	elif os.name in ("nt", "dos", "ce"):
-		# DOS/Windows
-		os.system('CLS')
-	else:
-		# Fallback for other operating systems.
-		print '\n' * numlines
+	if os.name == "posix": os.system('clear')
+	elif os.name in ("nt", "dos", "ce"): os.system('CLS')
+	else: print '\n' * numlines
 
 def checkinmode():
 	"""The checkin screen"""
 	clear()
 	ui.chk()
 	iny = raw_input("NAME:   ")
-	if iny == ":EXIT":
-		home()
-	else:
-		pass
+	if iny == ":EXIT": home()
+	else: pass
 	def markin(uid):
 		db.checkin(uid)
 	try:
@@ -59,10 +49,8 @@ def home_newuser():
 	"""The new user menu"""
 	ui.newy1()
 	newfname = raw_input("NEW USER FIRST NAME:   ")
-	if newfname == ":EXIT":
-		home()
-	else:
-		pass
+	if newfname == ":EXIT": home()
+	else: pass
 	newlname = raw_input("NEW USER LAST NAME:   ")
 	today = raw_input("MARK PRESENT FOR TODAY [Y/N]   ")
 	if today in ("Y","y"):
@@ -114,8 +102,7 @@ def home_search():
 	if do in ("N", "n"):
 		x = raw_input("Search by Full Name:   ")
 		z = db.osearch("name",x)
-		try:
-			outy(z)
+		try: outy(z)
 		except AttributeError: #@Error 004
 			ui.err("#004")
 			time.sleep(1)
@@ -124,8 +111,7 @@ def home_search():
 		x = raw_input("Search by ID:   ")
 		z = db.osearch("id",x)
 		outy(z)
-	elif do == ":EXIT":
-		home()
+	elif do == ":EXIT": home()
 	raw_input("Press [enter] to go home")
 	home()
 
@@ -150,10 +136,8 @@ def home_stats():
 				print ui.statsid(), i[0],"  ",ui.statstime(), i[1]
 			raw_input("[Enter] to go back to search")
 			home_stats()
-		elif f == "n":
-			home_stats()
-		elif f == "b":
-			home()
+		elif f == "n": home_stats()
+		elif f == "b": home()
 		else:
 			raw_input("I didnt get that... Press [Enter] to go back to stats...")
 			home_stats()
